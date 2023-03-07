@@ -17,9 +17,7 @@ async loadProducts () {
 
 }
 
-/* async loadById (){
-    
-} */
+
 }
 
 module.exports = ProductManager 

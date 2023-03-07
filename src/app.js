@@ -27,5 +27,5 @@ app.get('/products/:pid', async (req, res) => {
   const product = products.find(busqueda => busqueda.id === pid);
   console.log(product);
   
-  res.send({ producto: product }); 
+  res.send({ producto: product });  
 })
