@@ -12,20 +12,28 @@ app.listen(port, () => {
     console.log(`Server running at port ${port}`);
 })
 
+app.get('/products', async (req, res) => {
+  const products = await productManager.loadProducts();
+  const limit = req.query.limit;
 
+  if (limit) {
+    const sliceProducts = products.slice(0, parseInt(limit));
+    return res.send({ productos: sliceProducts });
+  }else { 
+    res.send ({productos: products})}
 
-app.get ('/products' , async (req,res) => {
-    
-    const products = await productManager.loadProducts()
-    
-    res.send ({productos: products})
-})
+});
 
 app.get('/products/:pid', async (req, res) => {
   const { pid } = req.params;
-  const products = await productManager.loadProducts();
-  const product = products.find(busqueda => busqueda.id === pid);
-  console.log(product);
+  try {
+    
+    const products = await productManager.loadProducts();
+    const product = products.find(busqueda => busqueda.id === Number(pid));
+    res.send({ productos: product });  
+    return 
+  } catch (error) {
+    console.log(error);
+  }
   
-  res.send({ producto: product });  
 })
